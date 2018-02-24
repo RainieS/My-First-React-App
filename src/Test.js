@@ -1,5 +1,7 @@
 import React from 'react'
 
+
+
 const titlestyle = {
   fontSize: 20,
   color: '#bada55'
@@ -10,6 +12,18 @@ export default class Test extends React.Component {
     list: ['Eggs','Milk','Bread','Butter'],
     counter: 1,
     text: '',
+    pokemonName: 'pikachu'
+  };
+
+  componentDidMount() {
+    fetch('https://pokeapi.co/api/v2/pokemon/2/')
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          pokemonName: json.name,
+          pokemonImageUrl: json.sprites.front_default,
+        });
+      });
   };
 
   handleButtonClick = () => {
@@ -71,6 +85,8 @@ export default class Test extends React.Component {
       <button onClick={this.handleAddshopping}>
         ADD
         </button>
+        <h1>Pokemon: {this.state.pokemonName}</h1>
+        <img src={this.state.pokemonImageUrl} />
       </div>
     )
   }
